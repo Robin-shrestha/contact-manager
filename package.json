@@ -1,0 +1,23 @@
+{
+  "name": "contact-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "concurrently \"cd backend && npm run start:dev\" \"cd frontend && npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robin-shrestha/contact-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Robin-shrestha/contact-manager/issues"
+  },
+  "homepage": "https://github.com/Robin-shrestha/contact-manager#readme",
+  "dependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
