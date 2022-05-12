@@ -4,7 +4,7 @@ import "./style.css";
 const _handleChange = (onChange) => (e) => {
   const value = e.target.value;
 
-  onChange(value);
+  onChange(e);
 };
 
 const Input = ({
@@ -23,6 +23,7 @@ const Input = ({
       <label>{label}</label>
       <div className="input-field" style={{ width }}>
         <input
+          autoComplete="nope"
           type={type || "text"}
           placeholder={placeholder}
           value={value}

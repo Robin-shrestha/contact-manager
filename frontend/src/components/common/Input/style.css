@@ -2,12 +2,17 @@
   background-color: white;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1em;
+  min-width: 144px;
 }
 .input-container label {
-  color: rgba(0, 0, 0, 0.8);
   font-weight: 600;
   text-transform: capitalize;
   margin: 0 0 4px 0;
+  align-self: start;
+  padding-left: 1.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(187, 187, 187, 0.9);
 }
 
 .input-field {
@@ -15,14 +20,35 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.65);
+  overflow-x: hidden;
+  min-width: 144px;
 }
 
 .input-field input {
-  border: none;
-  outline: none;
   flex: 1 1 auto;
   color: rgba(0, 0, 0, 0.75);
+  box-sizing: border-box;
+  border: none;
+  font-size: 1rem;
+  padding-left: 1.5rem;
+  padding-bottom: 0.75rem;
+  box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
+  transition: box-shadow 0.2s ease-in;
+}
+
+.input-field input:focus {
+  box-shadow: inset 0px -3px 0px 0px rgba(34, 193, 195, 0.7);
+  outline: none;
+}
+
+.input-field input::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
+}
+
+.input-field input:hover::-webkit-input-placeholder,
+.input-field input:focus::-webkit-input-placeholder {
+  opacity: 0;
 }
 
 .input-field input:focus-within,

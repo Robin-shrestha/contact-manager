@@ -1,68 +1,69 @@
+import { useFormik } from "formik";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Input from "../common/Input";
 
 import "./style.css";
 
 const Login = (props) => {
-  const [userName, setUserName] = useState("");
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log("🚀 ~ file: Login.js ~ line 16 ~ Login ~ values", values);
+    },
+  });
+
   return (
     <div id="loginform" className="login-container" style={{}}>
-      <div className="login-form" style={{}}>
-        <div>Login</div>
-        <div>
-          <form>
+      <div className="login-body" style={{}}>
+        <h3>Login</h3>
+        <div className="login-form">
+          <form onSubmit={formik.handleSubmit}>
             <Input
-              placeholder={"Username"}
-              value={userName}
-              onChange={(value) => {
-                setUserName(value);
-              }}
+              id="username"
+              name={"username"}
+              placeholder={"Enter your username"}
+              onChange={formik.handleChange}
+              value={formik.values.username}
+              // width="300px"
               label={"Username"}
-              prefix={<span>A</span>}
             />
+            <Input
+              id="password"
+              name={"password"}
+              placeholder={"Enter your Password"}
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              // width="300px"
+              label={"Password"}
+              type="password"
+            />
+
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
+                className="login-btn"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
+        <p style={{ textAlign: "center" }}>
+          Need ad Account!{" "}
+          <Link to="/register" style={{ fontWeight: "700", cursor: "pointer" }}>
+            Register
+          </Link>
+        </p>
       </div>
-      {/* <FormHeader title="Login" /> */}
-      {/* <Form /> */}
-      {/* <OtherMethods /> */}
     </div>
   );
 };
-
-const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
-
-const Form = (props) => (
-  <div>
-    <FormInput
-      description="Username"
-      placeholder="Enter your username"
-      type="text"
-    />
-    <FormInput
-      description="Password"
-      placeholder="Enter your password"
-      type="password"
-    />
-    <FormButton title="Log in" />
-  </div>
-);
-
-const FormButton = (props) => (
-  <div id="button" class="row">
-    <button>{props.title}</button>
-  </div>
-);
-
-const FormInput = (props) => (
-  <div class="row">
-    <label>{props.description}</label>
-    <input
-      autoComplete="off"
-      type={props.type}
-      placeholder={props.placeholder}
-    />
-  </div>
-);
 
 export default Login;
