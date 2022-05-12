@@ -6,10 +6,6 @@ import Register from "./components/auth/Register";
 import NotFound from "./components/common/NotFound";
 import ContactsRouting from "./components/contacts";
 
-import ContactList from "./components/contacts/ContactList";
-import ContactDetails from "./components/contacts/ContactDetails";
-import ContactForm from "./components/contacts/ContactForm";
-
 function App() {
   return (
     <div className="App">

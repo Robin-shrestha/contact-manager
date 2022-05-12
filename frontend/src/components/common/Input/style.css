@@ -1,0 +1,38 @@
+.input-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.input-container label {
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 0 0 4px 0;
+}
+
+.input-field {
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.65);
+}
+
+.input-field input {
+  border: none;
+  outline: none;
+  flex: 1 1 auto;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.input-field input:focus-within,
+.input-field input:focus-visible {
+  border: none;
+  outline: none;
+}
+
+.input-field .prefix {
+  display: flex;
+  padding: 0px 6px;
+  color: rgba(0, 0, 0, 0.65);
+}
