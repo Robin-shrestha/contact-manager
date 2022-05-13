@@ -2,8 +2,6 @@ import React from "react";
 import "./style.css";
 
 const _handleChange = (onChange) => (e) => {
-  const value = e.target.value;
-
   onChange(e);
 };
 
@@ -14,12 +12,12 @@ const Input = ({
   value,
   onChange,
   prefix,
-  wrapperWidth = "250px",
-  width = "250px",
+  wrapperWidth = "144px",
+  width = "144px",
   ...props
 }) => {
   return (
-    <div class="input-container" style={{ width: wrapperWidth }}>
+    <div className="input-container" style={{ width: wrapperWidth }}>
       <label>{label}</label>
       <div className="input-field" style={{ width }}>
         <input

@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { buttonTypes } from "../../constants/strings";
+import Button from "../common/button/Button";
 
 import Input from "../common/Input";
 
@@ -18,8 +19,8 @@ const Login = (props) => {
   });
 
   return (
-    <div id="loginform" className="login-container" style={{}}>
-      <div className="login-body" style={{}}>
+    <div id="loginform" className="login-container">
+      <div className="login-body">
         <h3>Login</h3>
         <div className="login-form">
           <form onSubmit={formik.handleSubmit}>
@@ -29,7 +30,8 @@ const Login = (props) => {
               placeholder={"Enter your username"}
               onChange={formik.handleChange}
               value={formik.values.username}
-              // width="300px"
+              width="250px"
+              wrapperWidth="250px"
               label={"Username"}
             />
             <Input
@@ -38,28 +40,27 @@ const Login = (props) => {
               placeholder={"Enter your Password"}
               onChange={formik.handleChange}
               value={formik.values.password}
-              // width="300px"
+              wrapperWidth="250px"
+              width="250px"
               label={"Password"}
               type="password"
             />
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <button
+            <div className="login-form-btn-container">
+              <Button
                 onClick={() => {
                   formik.handleSubmit();
                 }}
+                // customType={buttonTypes.ADD}
                 className="login-btn"
               >
-                Submit
-              </button>
+                DEFAULT
+              </Button>
             </div>
           </form>
         </div>
-        <p style={{ textAlign: "center" }}>
-          Need ad Account!{" "}
-          <Link to="/register" style={{ fontWeight: "700", cursor: "pointer" }}>
-            Register
-          </Link>
+        <p className="login-footer">
+          Need ad Account! <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

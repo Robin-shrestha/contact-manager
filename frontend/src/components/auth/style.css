@@ -33,6 +33,10 @@
   gap: 12px;
 }
 
+.login-form-btn-container {
+  display: flex;
+  justify-content: center;
+}
 .login-btn {
   margin: 10px 0 30px 0;
   border-radius: 25px;
@@ -55,4 +59,13 @@
 
 .login-btn:hover {
   opacity: 0.8;
+}
+
+.login-footer {
+  text-align: center;
+}
+
+.login-footer a {
+  font-weight: 700;
+  cursor: pointer;
 }
