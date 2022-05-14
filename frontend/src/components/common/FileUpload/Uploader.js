@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import classNames from "classnames";
 import { useDropzone } from "react-dropzone";
 
@@ -80,7 +80,6 @@ const Uploader = ({
 }) => {
   const [preview, setPreview] = useState([]);
   const {
-    acceptedFiles,
     getRootProps,
     getInputProps,
     isFocused,
@@ -120,12 +119,6 @@ const Uploader = ({
     }),
     [isFocused, isDragAccept, isDragReject]
   );
-
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   const inputProps = getInputProps();
 
