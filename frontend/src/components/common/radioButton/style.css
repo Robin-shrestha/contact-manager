@@ -14,7 +14,8 @@
 .radio-option {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  margin-right: 4px;
 }
 
 .radio-option input {

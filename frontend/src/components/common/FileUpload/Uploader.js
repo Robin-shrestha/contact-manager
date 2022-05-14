@@ -12,10 +12,10 @@ const baseStyle = {
   padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: "#eeeeee",
+  borderColor: "#cccccc",
   borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
+  backgroundColor: "transparent",
+  color: "rgba(0,0,0,.75)",
   outline: "none",
   transition: "border .24s ease-in-out",
 };
@@ -158,7 +158,9 @@ const Uploader = ({
         </div>
         {thumbs.length ? <aside style={thumbsContainer}>{thumbs}</aside> : null}
         {fileRejections.length ? (
-          <div className="error">{fileRejections?.[0].errors?.[0].message}</div>
+          <div className="py-2 error">
+            {fileRejections?.[0].errors?.[0].message}
+          </div>
         ) : null}
       </div>
     </div>

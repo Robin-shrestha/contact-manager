@@ -13,7 +13,12 @@ body {
     #004ff9
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  font-family: "work sans";
+  font-family: "work sans", "Lucida Console", "Courier New", monospace;
+  /* 
+  font-family: work sans ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji"; */
 }
 
 html {
@@ -22,7 +27,8 @@ html {
 
 /* input fields container */
 .input-field-container {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.15);
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   margin-bottom: 0.25em;

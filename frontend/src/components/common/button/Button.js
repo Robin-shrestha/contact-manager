@@ -26,6 +26,7 @@ const Button = ({
   className,
   isDisabled,
   customType,
+  style,
   ...rest
 }) => {
   return (
@@ -34,6 +35,7 @@ const Button = ({
       className={classnames("btn-root", _customType(customType), className, {
         disabled: isDisabled,
       })}
+      style={style}
       {...rest}
       disabled={isDisabled}
     >

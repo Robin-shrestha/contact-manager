@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Input from "../common/Input";
 import FormError from "../common/FormError";
@@ -19,6 +19,7 @@ const layout = {
 };
 
 const Register = (props) => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       full_name: "",
@@ -35,6 +36,7 @@ const Register = (props) => {
         "🚀 ~ file: Register.js ~ line 16 ~ Register ~ values",
         values
       );
+      navigate("/contacts");
     },
   });
   const { errors, touched } = formik;
@@ -62,7 +64,7 @@ const Register = (props) => {
                 />
               </div>
 
-              <div className="col-span-2 lg:col-span-1 pb-3">
+              <div className="col-span-2 lg:col-span-2 pb-3">
                 <Uploader
                   id="profile_pic"
                   name={"profile_pic"}

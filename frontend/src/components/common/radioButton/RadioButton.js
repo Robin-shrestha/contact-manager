@@ -41,7 +41,6 @@ const RadioButton = ({
           ? options.map((item, index) => {
               return (
                 <div className="radio-option" key={index}>
-                  <span> {item.label}</span>
                   <input
                     disabled={isDisabled}
                     type="radio"
@@ -53,6 +52,7 @@ const RadioButton = ({
                       setCheckedValue(e.target.value);
                     }}
                   />
+                  <span> {item.label}</span>
                 </div>
               );
             })

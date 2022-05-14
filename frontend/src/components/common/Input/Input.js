@@ -14,7 +14,7 @@ const Input = ({
   type,
   value,
   onChange,
-  prefix,
+  suffix,
   wrapperWidth = "144px",
   width = "144px",
   className,
@@ -42,7 +42,11 @@ const Input = ({
           onChange={_handleChange(onChange)}
           {...props}
         />
-        {prefix && <span className="prefix">{prefix}</span>}
+        {suffix && (
+          <span className="suffix" style={{ color: "white" }}>
+            {suffix}
+          </span>
+        )}
       </div>
     </div>
   );

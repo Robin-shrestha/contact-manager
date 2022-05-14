@@ -2,9 +2,9 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import ContactList from "./ContactList";
-import ContactDetails from "./ContactDetails";
 import ContactForm from "./ContactForm";
 import NotFound from "../common/NotFound";
+import ContactDetails from "./ContactDetails";
 
 const ContactsRouting = (props) => {
   return (
@@ -12,9 +12,9 @@ const ContactsRouting = (props) => {
       <Route path="/" element={<Navigate to="/contacts/list" replace />} />
 
       <Route path="list" element={<ContactList />} />
-      <Route path="details" element={<ContactDetails />} />
+      <Route path=":id/details" element={<ContactDetails />} />
       <Route path="add" element={<ContactForm />} />
-      <Route path="edit" element={<ContactForm />} />
+      <Route path=":id/edit" element={<ContactForm />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -15,7 +15,8 @@
   width: 30%;
   height: 60%;
   margin: 100px auto;
-  background-color: #ffffff;
+  background-color: white;
+
   border-radius: 25px;
 }
 
@@ -58,7 +59,6 @@
   color: #000;
   /* font-weight: 700; */
   font-size: 2em;
-  font-family: "work sans";
   margin: 20px 0 30px 0;
 }
 

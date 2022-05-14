@@ -32,7 +32,7 @@ const Datepicker = ({
 
   return (
     <div
-      className={classNames("input-field-container", {
+      className={classNames("input-field-container", wrapperClassName, {
         required: required,
         disabled: isDisabled,
       })}
