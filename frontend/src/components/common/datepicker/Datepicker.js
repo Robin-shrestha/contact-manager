@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import DatePicker from "react-date-picker";
-
-import SvgIcon from "../../common/svgIcons";
-import * as svgIconNames from "../../../constants/svgIcons";
 
 import "./style.css";
 
@@ -45,7 +42,6 @@ const Datepicker = ({
         style={{ width }}
       >
         <div className="date-picker-input">
-          {/* <SvgIcon name={svgIconNames.CALENDER} /> */}
           <DatePicker
             {...rest}
             value={localDateState}
