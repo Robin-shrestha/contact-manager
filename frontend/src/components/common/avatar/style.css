@@ -1,5 +1,9 @@
 .base img {
   visibility: hidden;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
 }
 .circular--landscape {
   display: inline-block;
@@ -27,4 +31,18 @@
   visibility: visible;
   width: 100%;
   height: auto;
+}
+
+.circular--no-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  background-color: blueviolet;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
