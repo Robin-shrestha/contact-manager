@@ -11,10 +11,14 @@
   transition: transform 0.25s ease-out;
 }
 
-.btn-root:hover,
-.btn-root:focus {
+.btn-root:hover {
   opacity: 0.8;
   transform: scale(1.02);
+}
+
+.btn-root:focus {
+  /* transform: scale(0.99); */
+  border: 1px;
 }
 
 .disabled {

@@ -1,8 +1,11 @@
 import React from "react";
+import classNames from "classnames";
+
 import "./style.css";
 
 const _handleChange = (onChange) => (e) => {
-  onChange(e);
+  const value = e.target.value;
+  onChange(value);
 };
 
 const Input = ({
@@ -14,12 +17,20 @@ const Input = ({
   prefix,
   wrapperWidth = "144px",
   width = "144px",
+  className,
+  wrapperClassName,
+  required = false,
   ...props
 }) => {
   return (
-    <div className="input-container" style={{ width: wrapperWidth }}>
+    <div
+      className={classNames("input-container", wrapperClassName, {
+        required: required,
+      })}
+      style={{ width: width > wrapperWidth ? width : wrapperWidth }}
+    >
       <label>{label}</label>
-      <div className="input-field" style={{ width }}>
+      <div className={classNames("input-field", className)} style={{ width }}>
         <input
           autoComplete="nope"
           type={type || "text"}

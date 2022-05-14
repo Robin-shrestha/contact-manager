@@ -1,11 +1,11 @@
-.input-container {
+.date-picker-container {
   background-color: white;
   display: flex;
   flex-direction: column;
   margin-bottom: 1em;
   min-width: 144px;
 }
-.input-container label {
+.date-picker-container label {
   font-weight: 600;
   text-transform: capitalize;
   margin: 0 0 4px 0;
@@ -15,16 +15,16 @@
   color: rgba(0, 0, 0, 0.55);
 }
 
-.input-field {
+.date-picker-field {
   background-color: inherit;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   min-width: 144px;
 }
 
-.input-field input {
+.date-picker-input {
   flex: 1 1 auto;
   color: rgba(0, 0, 0, 0.75);
   box-sizing: border-box;
@@ -36,29 +36,25 @@
   transition: box-shadow 0.2s ease-in;
 }
 
-.input-field input:focus {
+.date-picker-input:focus,
+.date-picker-input:focus-within {
   box-shadow: inset 0px -3px 0px 0px rgba(34, 193, 195, 0.7);
   outline: none;
 }
 
-.input-field input::-webkit-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.25s ease-out;
+.date-picker-field input,
+.date-picker-field .react-date-picker__inputGroup__divider {
+  color: rgba(0, 0, 0, 0.75);
 }
 
-.input-field input:hover::-webkit-input-placeholder,
-.input-field input:focus::-webkit-input-placeholder {
-  opacity: 0;
-}
-
-.input-field input:focus-within,
-.input-field input:focus-visible {
+.date-picker-field input:focus-visible {
   border: none;
   outline: none;
 }
 
-.input-field .prefix {
+.date-picker-field .react-date-picker__wrapper {
   display: flex;
-  padding: 0px 6px;
-  color: rgba(0, 0, 0, 0.65);
+  flex-grow: 1;
+  flex-shrink: 0;
+  border: none;
 }

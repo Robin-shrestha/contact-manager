@@ -19,7 +19,7 @@ const Login = (props) => {
   });
 
   return (
-    <div id="loginform" className="login-container">
+    <div id="loginform" className="auth-container">
       <div className="login-body">
         <h3>Login</h3>
         <div className="login-form">
@@ -28,39 +28,33 @@ const Login = (props) => {
               id="username"
               name={"username"}
               placeholder={"Enter your username"}
-              onChange={formik.handleChange}
+              onChange={(value) => formik.setFieldValue("username", value)}
               value={formik.values.username}
               width="250px"
               wrapperWidth="250px"
               label={"Username"}
+              className="login-input"
             />
             <Input
               id="password"
               name={"password"}
               placeholder={"Enter your Password"}
-              onChange={formik.handleChange}
+              onChange={(value) => formik.setFieldValue("password", value)}
               value={formik.values.password}
               wrapperWidth="250px"
               width="250px"
               label={"Password"}
+              className="login-input"
               type="password"
             />
 
-            <div className="login-form-btn-container">
-              <Button
-                onClick={() => {
-                  formik.handleSubmit();
-                }}
-                // customType={buttonTypes.ADD}
-                className="login-btn"
-              >
-                DEFAULT
-              </Button>
+            <div className="form-btn-container">
+              <Button className="form-btn">LOGIN</Button>
             </div>
           </form>
         </div>
-        <p className="login-footer">
-          Need ad Account! <Link to="/register">Register</Link>
+        <p className="footer">
+          Need an Account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

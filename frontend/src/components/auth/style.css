@@ -1,11 +1,13 @@
-.login-container {
+/* body container */
+.auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   font-family: "work sans";
 }
 
+/* LOGIN */
 .login-body {
   max-width: 400px;
   min-width: 300px;
@@ -15,6 +17,11 @@
   margin: 100px auto;
   background-color: #ffffff;
   border-radius: 25px;
+}
+
+.login-input input {
+  padding-bottom: 0.75rem;
+  font-weight: 600;
 }
 
 .login-body h3 {
@@ -33,12 +40,39 @@
   gap: 12px;
 }
 
-.login-form-btn-container {
+/* REGISTER */
+
+.register-body {
+  max-width: 750px;
+  min-width: 300px;
+  min-height: 450px;
+  width: 60%;
+  /* height: 60%; */
+  margin: 100px auto;
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+.register-body h3 {
+  text-align: center;
+  color: #000;
+  /* font-weight: 700; */
+  font-size: 2em;
+  font-family: "work sans";
+  margin: 20px 0 30px 0;
+}
+
+.register-form form {
+  padding: 2em 1.25em;
+}
+
+/* common */
+.form-btn-container {
   display: flex;
   justify-content: center;
+  margin: 20px 0 30px 0;
 }
-.login-btn {
-  margin: 10px 0 30px 0;
+.form-btn {
   border-radius: 25px;
   width: 80%;
   height: 40px;
@@ -53,19 +87,20 @@
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(90deg, #fff94c, #004ff9);
   border: 0px;
-  cursor: pointer;
+  text-transform: uppercase;
   transition: opacity 0.25s ease-out;
 }
 
-.login-btn:hover {
+.form-btn:hover {
   opacity: 0.8;
 }
 
-.login-footer {
+.footer {
   text-align: center;
+  margin-bottom: 3em;
 }
 
-.login-footer a {
+.footer a {
   font-weight: 700;
   cursor: pointer;
 }
