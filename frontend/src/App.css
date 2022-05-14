@@ -20,8 +20,52 @@ html {
   font-size: 100%;
 }
 
+/* input fields container */
+.input-field-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.25em;
+  min-width: 144px;
+}
+.input-field-container label {
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 0 0 4px 0;
+  align-self: start;
+  padding-left: 1rem;
+  padding-bottom: 0.25rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
 .required label::after {
   content: "*";
   color: red;
   padding: 0 0.25em;
+}
+
+.disabled {
+  color: rgba(0, 0, 0, 0.5);
+  background-color: inherit;
+}
+
+.disabled label {
+  color: rgba(0, 0, 0, 0.3);
+  cursor: not-allowed;
+}
+
+.disabled input {
+  color: rgba(0, 0, 0, 0.5);
+  cursor: not-allowed !important;
+}
+
+.disabled input:hover::-webkit-input-placeholder,
+.disabled input:focus::-webkit-input-placeholder {
+  opacity: 1 !important;
+}
+
+.error {
+  padding-left: 1.5em;
+  color: red;
+  font-size: 0.75em;
 }

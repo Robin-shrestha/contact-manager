@@ -1,26 +1,8 @@
-.date-picker-container {
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1em;
-  min-width: 144px;
-}
-.date-picker-container label {
-  font-weight: 600;
-  text-transform: capitalize;
-  margin: 0 0 4px 0;
-  align-self: start;
-  padding-left: 1rem;
-  padding-bottom: 0.25rem;
-  color: rgba(0, 0, 0, 0.55);
-}
-
 .date-picker-field {
   background-color: inherit;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  /* overflow-x: hidden; */
   min-width: 144px;
 }
 
@@ -57,4 +39,17 @@
   flex-grow: 1;
   flex-shrink: 0;
   border: none;
+}
+
+.disabled {
+  background-color: inherit;
+}
+
+.disabled .date-picker-input {
+  color: rgba(0, 0, 0, 0.5);
+  cursor: not-allowed;
+}
+
+.disabled .react-date-picker__button {
+  display: none;
 }

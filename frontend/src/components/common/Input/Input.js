@@ -20,19 +20,22 @@ const Input = ({
   className,
   wrapperClassName,
   required = false,
+  isDisabled,
   ...props
 }) => {
   return (
     <div
-      className={classNames("input-container", wrapperClassName, {
+      className={classNames("input-field-container", wrapperClassName, {
         required: required,
+        disabled: isDisabled,
       })}
       style={{ width: width > wrapperWidth ? width : wrapperWidth }}
     >
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <div className={classNames("input-field", className)} style={{ width }}>
         <input
           autoComplete="nope"
+          disabled={isDisabled}
           type={type || "text"}
           placeholder={placeholder}
           value={value}

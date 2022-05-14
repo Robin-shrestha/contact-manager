@@ -1,0 +1,22 @@
+.radio-field {
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  min-width: 144px;
+  gap: 12px;
+  padding-left: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.radio-option input {
+  cursor: pointer;
+}

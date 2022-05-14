@@ -15,6 +15,7 @@ const Datepicker = ({
   icon,
   placeholder,
   required,
+  isDisabled,
   ...rest
 }) => {
   const [localDateState, setLocalDateState] = useState(value);
@@ -31,12 +32,13 @@ const Datepicker = ({
 
   return (
     <div
-      className={classNames("date-picker-container", {
+      className={classNames("input-field-container", {
         required: required,
+        disabled: isDisabled,
       })}
       style={{ width: width > wrapperWidth ? width : wrapperWidth }}
     >
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <div
         className={classNames("date-picker-field", className)}
         style={{ width }}
@@ -44,6 +46,7 @@ const Datepicker = ({
         <div className="date-picker-input">
           <DatePicker
             {...rest}
+            disabled={isDisabled}
             value={localDateState}
             format="dd/MM/y"
             onChange={(date) => {

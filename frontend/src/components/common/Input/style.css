@@ -1,20 +1,3 @@
-.input-container {
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1em;
-  min-width: 144px;
-}
-.input-container label {
-  font-weight: 600;
-  text-transform: capitalize;
-  margin: 0 0 4px 0;
-  align-self: start;
-  padding-left: 1rem;
-  padding-bottom: 0.25rem;
-  color: rgba(0, 0, 0, 0.55);
-}
-
 .input-field {
   background-color: inherit;
   display: flex;

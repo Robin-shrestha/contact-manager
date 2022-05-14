@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import Input from "../common/Input";
 import Button from "../common/button/Button";
 import Datepicker from "../common/datepicker";
+import RadioButtons from "../common/radioButton";
+import registerSchema from "../../schemas/register";
+import { genderOptions } from "../../constants/options";
+
 import "./style.css";
+import FormError from "../common/FormError";
 
 const layout = {
   wrapperWidth: "100%",
@@ -22,6 +27,7 @@ const Register = (props) => {
       gender: "",
       profile_pic: null,
     },
+    validationSchema: registerSchema,
     onSubmit: (values) => {
       console.log(
         "🚀 ~ file: Register.js ~ line 16 ~ Register ~ values",
@@ -29,13 +35,8 @@ const Register = (props) => {
       );
     },
   });
+  const { errors, touched } = formik;
 
-  // TODO
-  /**
-   *
-   * Name, Phone, Photograph
-   * address, email, dob, gender
-   */
   return (
     <div id="loginform" className="auth-container">
       <div className="register-body">
@@ -43,7 +44,7 @@ const Register = (props) => {
         <div className="register-form">
           <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-3 lg:col-span-2">
+              <div className="col-span-3 lg:col-span-2 pb-3">
                 <Input
                   id="full_name"
                   name={"full_name"}
@@ -53,9 +54,13 @@ const Register = (props) => {
                   {...layout}
                   label={"full name"}
                 />
+                <FormError
+                  error={errors.full_name}
+                  touched={touched.full_name}
+                />
               </div>
 
-              <div className="col-span-2 lg:col-span-1">
+              <div className="col-span-2 lg:col-span-1 pb-3">
                 <Input
                   id="profile_pic"
                   name={"profile_pic"}
@@ -67,48 +72,15 @@ const Register = (props) => {
                   {...layout}
                   label={"profile pic"}
                 />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2 lg:col-span-1">
-                <Input
-                  id="phone"
-                  name={"phone"}
-                  placeholder={"phone"}
-                  onChange={(value) => formik.setFieldValue("phone", value)}
-                  value={formik.values.phone}
-                  {...layout}
-                  label={"phone"}
-                />
-              </div>
-              <div className="col-span-2 lg:col-span-1">
-                <Input
-                  id="email"
-                  name={"email"}
-                  placeholder={"email"}
-                  onChange={(value) => formik.setFieldValue("email", value)}
-                  value={formik.values.email}
-                  {...layout}
-                  label={"email"}
-                />
-              </div>
-              <div className="col-span-2 lg:col-span-1">
-                <Input
-                  id="address"
-                  name={"address"}
-                  placeholder={"address"}
-                  onChange={(value) => formik.setFieldValue("address", value)}
-                  value={formik.values.address}
-                  {...layout}
-                  label={"address"}
+                <FormError
+                  error={errors.profile_pic}
+                  touched={touched.profile_pic}
                 />
               </div>
             </div>
-
             <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2 lg:col-span-1">
-                <Input
+              <div className="col-span-2 lg:col-span-2 pb-3">
+                <RadioButtons
                   required
                   id="gender"
                   name={"gender"}
@@ -116,10 +88,12 @@ const Register = (props) => {
                   onChange={(value) => formik.setFieldValue("gender", value)}
                   value={formik.values.gender}
                   {...layout}
-                  label={"gender"}
+                  options={genderOptions}
+                  label={"Gender"}
                 />
+                <FormError error={errors.gender} touched={touched.gender} />
               </div>
-              <div className="col-span-2 lg:col-span-1">
+              <div className="col-span-2 lg:col-span-1 pb-3 ">
                 <Datepicker
                   required
                   id="date_of_birth"
@@ -132,15 +106,48 @@ const Register = (props) => {
                   {...layout}
                   label={"date of birth"}
                 />
-                {/* <Input
-                  id="date_of_birth"
-                  name={"date_of_birth"}
-                  placeholder={"date of birth"}
-                  onChange={(value) => formik.setFieldValue("date_of_birth", value)}
-                  value={formik.values.date_of_birth}
+                <FormError
+                  error={errors.date_of_birth}
+                  touched={touched.date_of_birth}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="col-span-2 lg:col-span-1 pb-3 ">
+                <Input
+                  id="phone"
+                  name={"phone"}
+                  placeholder={"phone"}
+                  onChange={(value) => formik.setFieldValue("phone", value)}
+                  value={formik.values.phone}
                   {...layout}
-                  label={"date of birth"}
-                /> */}
+                  label={"phone"}
+                />
+                <FormError error={errors.phone} touched={touched.phone} />
+              </div>
+              <div className="col-span-2 lg:col-span-1 pb-3 ">
+                <Input
+                  id="email"
+                  name={"email"}
+                  placeholder={"email"}
+                  onChange={(value) => formik.setFieldValue("email", value)}
+                  value={formik.values.email}
+                  {...layout}
+                  label={"email"}
+                />
+                <FormError error={errors.email} touched={touched.email} />
+              </div>
+              <div className="col-span-2 lg:col-span-1">
+                <Input
+                  id="address"
+                  name={"address"}
+                  placeholder={"address"}
+                  onChange={(value) => formik.setFieldValue("address", value)}
+                  value={formik.values.address}
+                  {...layout}
+                  label={"address"}
+                />
+                <FormError error={errors.address} touched={touched.address} />
               </div>
             </div>
 
