@@ -21,7 +21,7 @@ const registerSchema = Yup.object().shape({
     .email(stringConst.INVALID_FORMAT)
     .required(stringConst.REQUIRED),
   date_of_birth: Yup.string().nullable(true).required(stringConst.REQUIRED),
-  profile_pic: Yup.object(),
+  profile_pic: Yup.object().nullable(true),
   gender: Yup.string()
     .oneOf(genderOptions.map((item) => item.value))
     .required(stringConst.REQUIRED),

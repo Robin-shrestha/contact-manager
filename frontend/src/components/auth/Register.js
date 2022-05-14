@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
 import Input from "../common/Input";
+import FormError from "../common/FormError";
 import Button from "../common/button/Button";
 import Datepicker from "../common/datepicker";
 import RadioButtons from "../common/radioButton";
@@ -9,7 +10,6 @@ import registerSchema from "../../schemas/register";
 import { genderOptions } from "../../constants/options";
 
 import "./style.css";
-import FormError from "../common/FormError";
 
 const layout = {
   wrapperWidth: "100%",
