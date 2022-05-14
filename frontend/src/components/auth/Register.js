@@ -7,7 +7,9 @@ import Button from "../common/button/Button";
 import Datepicker from "../common/datepicker";
 import RadioButtons from "../common/radioButton";
 import registerSchema from "../../schemas/register";
+import Uploader from "../common/FileUpload/Uploader";
 import { genderOptions } from "../../constants/options";
+import { acceptImagesTypes } from "../../constants/uploadAcceptTypes";
 
 import "./style.css";
 
@@ -61,7 +63,7 @@ const Register = (props) => {
               </div>
 
               <div className="col-span-2 lg:col-span-1 pb-3">
-                <Input
+                <Uploader
                   id="profile_pic"
                   name={"profile_pic"}
                   placeholder={"Profile Picture"}
@@ -71,6 +73,7 @@ const Register = (props) => {
                   value={formik.values.profile_pic}
                   {...layout}
                   label={"profile pic"}
+                  accept={acceptImagesTypes}
                 />
                 <FormError
                   error={errors.profile_pic}
