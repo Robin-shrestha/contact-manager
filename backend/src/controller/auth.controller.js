@@ -1,5 +1,9 @@
 const login = (req, res, next) => {
   try {
+    console.log(
+      "🚀 ~ file: auth.controller.js ~ line 2 ~ login ~ req",
+      req.body
+    );
     res.send("login!");
   } catch (error) {
     next(error);
