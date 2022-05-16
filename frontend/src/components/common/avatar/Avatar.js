@@ -5,7 +5,6 @@ import "./style.css";
 
 const Avatar = ({ src, name }) => {
   const [dimensions, setDimensions] = useState({});
-  console.log({ name, dimensions });
 
   function getMeta(url) {
     const img = new Image();
@@ -22,11 +21,11 @@ const Avatar = ({ src, name }) => {
     if (src) {
       getMeta(src);
     }
-  }, []);
+  }, [src]);
 
   return (
     <div
-      class={classNames("base", {
+      className={classNames("base", {
         "circular--portrait": dimensions.width <= dimensions.height,
         "circular--landscape": dimensions.width >= dimensions.height,
       })}
@@ -36,7 +35,8 @@ const Avatar = ({ src, name }) => {
       ) : (
         <div className="circular--no-image">
           {name
-            .split(" ")
+            ?.split(" ")
+            .slice(0, 2)
             .map((item) => item[0])
             .join("")}
         </div>

@@ -29,9 +29,14 @@ const Button = ({
   style,
   ...rest
 }) => {
+  const _onClick = (e) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={_onClick}
       className={classnames("btn-root", _customType(customType), className, {
         disabled: isDisabled,
       })}

@@ -18,7 +18,12 @@
 
 .btn-root:focus {
   /* transform: scale(0.99); */
-  border: 1px;
+  font-weight: 500;
+}
+
+.btn-root:not(:focus),
+.btn-root:not(:hover) {
+  font-weight: 400;
 }
 
 .disabled {

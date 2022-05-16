@@ -1,6 +1,6 @@
 export const mockData = [
   {
-    id: 1,
+    id: "1",
     name: "arragon",
     phone: {
       mobile: "956456453546",
@@ -13,7 +13,7 @@ export const mockData = [
     email: "arragon@gmail.com",
   },
   {
-    id: 2,
+    id: "2",
     name: "gandalf",
     phone: {
       mobile: "956456453546",
@@ -26,7 +26,7 @@ export const mockData = [
     email: "gandalf@gmail.com",
   },
   {
-    id: 3,
+    id: "3",
     name: "gimli",
     phone: {
       mobile: "956456453546",
@@ -39,7 +39,7 @@ export const mockData = [
     email: "gimli@gmail.com",
   },
   {
-    id: 4,
+    id: "4",
     name: "legolas",
     phone: {
       mobile: "956456453546",
@@ -52,7 +52,7 @@ export const mockData = [
     email: "legolas@gmail.com",
   },
   {
-    id: 5,
+    id: "5",
     name: "boromir",
     phone: {
       mobile: "956456453546",
@@ -65,8 +65,8 @@ export const mockData = [
     email: "boromir@gmail.com",
   },
   {
-    id: 6,
-    name: "frodo baggins",
+    id: "6",
+    name: "frodo baggins ",
     phone: {
       mobile: "956456453546",
       work: "956456453546",
@@ -78,7 +78,7 @@ export const mockData = [
     email: "frodo@gmail.com",
   },
   {
-    id: 7,
+    id: "7",
     name: "sam gamgee",
     phone: {
       mobile: "956456453546",
@@ -91,7 +91,7 @@ export const mockData = [
     email: "sam@gmail.com",
   },
   {
-    id: 8,
+    id: "8",
     name: "merry brandybuck",
     phone: {
       mobile: "956456453546",
@@ -104,7 +104,7 @@ export const mockData = [
     email: "merry@gmail.com",
   },
   {
-    id: 9,
+    id: "9",
     name: "pippin took",
     phone: {
       mobile: "956456453546",

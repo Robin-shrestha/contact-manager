@@ -9,7 +9,7 @@
   min-width: 350px;
 }
 
-/* CONTROL */
+/* #region CONTROL */
 .control-menu {
   display: flex;
   justify-content: flex-end;
@@ -63,7 +63,7 @@
   transform: scale(1);
 }
 
-/* END CONTROL */
+/* $endregion END CONTROL */
 
 /* LIST */
 .contact-list-container {
@@ -112,24 +112,11 @@
 
 .contacts-form {
   padding: 2em 2.5em;
-  /* background: -webkit-linear-gradient(
-    90deg,
-    rgba(181, 181, 181, 0.4),
-    rgba(181, 181, 181, 0.7),
-    rgba(181, 181, 181, 0.2)
-  );
-  background: linear-gradient(
-    90deg,
-    rgba(207, 206, 206, 0.7),
-    rgba(181, 181, 181, 0.7),
-    rgba(181, 181, 181, 0.2)
-  ); */
   background-color: white;
   max-width: 750px;
   min-width: 300px;
   min-height: 450px;
   width: 60%;
-  /* height: 60%; */
   margin: 100px auto;
   background-color: #ffffff;
   border-radius: 25px;
@@ -145,4 +132,62 @@
 .input-component > input {
   color: rgba(0, 0, 0, 0.75);
 }
+
+.form-btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 1em 0.125em;
+}
 /* END CONTACTS FORM */
+
+/* Contact Details */
+
+.contact-detail-body {
+  padding: 2em 2.5em;
+  background-color: white;
+  max-width: 750px;
+  min-width: 300px;
+  min-height: 450px;
+  width: 60%;
+  margin: 100px auto;
+  border-radius: 25px;
+  background-color: rgba(39, 39, 39, 0.5);
+  padding: 8px;
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(39, 39, 39, 0.4),
+    rgba(39, 39, 39, 0.7),
+    rgba(101, 101, 101, 0.2)
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    90deg,
+    rgba(39, 39, 39, 0.4),
+    rgba(39, 39, 39, 0.7),
+    rgba(101, 101, 101, 0.2)
+  );
+}
+
+.header {
+  margin: 1rem 0;
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125em;
+  font-size: 2em;
+  text-align: center;
+  font-weight: 600;
+}
+
+.header span {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.header span:hover {
+  transform: scale(1.1);
+}
+
+/* End Contact Details */

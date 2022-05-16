@@ -157,7 +157,14 @@ const Register = (props) => {
             </div>
 
             <div className="form-btn-container">
-              <Button className="form-btn">Sign Up</Button>
+              <Button
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
+                className="form-btn"
+              >
+                Sign Up
+              </Button>
             </div>
           </form>
         </div>

@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 
 import Input from "../common/Input";
 import FormError from "../common/FormError";
 import Button from "../common/button/Button";
 import Datepicker from "../common/datepicker";
 import RadioButtons from "../common/radioButton";
-import registerSchema from "../../schemas/register";
+import contactFormSchema from "../../schemas/contactForm";
 import Uploader from "../common/FileUpload/Uploader";
 import { genderOptions } from "../../constants/options";
 import { acceptImagesTypes } from "../../constants/uploadAcceptTypes";
 
 import "./style.css";
+import { ADD, CANCEL, DEFAULT, EDIT } from "../../constants/strings";
 
 const layout = {
   wrapperWidth: "100%",
@@ -20,21 +21,28 @@ const layout = {
   wrapperClassName: "input-component-wrapper",
   className: "input-component",
 };
+
+const initialValue = {
+  full_name: "",
+  mobile_no: "",
+  home_no: "",
+  work_no: "",
+  address: "",
+  email: "",
+  date_of_birth: undefined,
+  gender: "",
+  profile_pic: null,
+};
 const ContactForm = () => {
+  const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [editMode, setEditMode] = useState(false);
+
   const formik = useFormik({
-    initialValues: {
-      full_name: "",
-      mobile_no: "",
-      home_no: "",
-      work_no: "",
-      address: "",
-      email: "",
-      date_of_birth: undefined,
-      gender: "",
-      profile_pic: null,
-    },
-    // validationSchema: registerSchema,
+    initialValues: editMode ? initialValue : initialValue, //Todo
+    validationSchema: contactFormSchema,
     onSubmit: (values) => {
       console.log(
         "🚀 ~ file: Register.js ~ line 16 ~ Register ~ values",
@@ -44,17 +52,22 @@ const ContactForm = () => {
     },
   });
 
+  useEffect(() => {
+    location.pathname.endsWith("edit") ? setEditMode(true) : setEditMode(false);
+
+    return () => {};
+  }, []);
+
   const { errors, touched } = formik;
 
   return (
     <div className="contact-container">
-      <div
-        className="contact-body"
-        // style={{ backgroundColor: "white", color: "black" }}
-      >
+      <div className="contact-body">
         <div className="contacts-form">
           <div className="text-center mb-8">
-            <h3 style={{ fontSize: "2em", color: "black" }}>Add Contact</h3>
+            <h3 style={{ fontSize: "2em", color: "black" }}>
+              {editMode ? <>Edit Contact</> : <>Add Contact</>}
+            </h3>
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-3 gap-4">
@@ -198,8 +211,49 @@ const ContactForm = () => {
             </div>
 
             <div className="form-btn-container">
-              <Button customType={"EDIT"} className="">
-                EDIT
+              {editMode ? (
+                <>
+                  <Button
+                    customType={EDIT}
+                    onClick={() => {
+                      formik.handleSubmit();
+                    }}
+                    className=""
+                  >
+                    EDIT
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      console.log("delete");
+                    }}
+                    customType={CANCEL}
+                    className=""
+                  >
+                    DELETE
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  customType={ADD}
+                  onClick={() => {
+                    formik.handleSubmit();
+                  }}
+                  className=""
+                >
+                  ADD
+                </Button>
+              )}
+
+              <Button
+                customType={DEFAULT}
+                onClick={() => {
+                  editMode
+                    ? navigate(`/contacts/${params?.id}/details`)
+                    : navigate(`/contacts/list`);
+                }}
+                className=""
+              >
+                BACK
               </Button>
             </div>
           </form>

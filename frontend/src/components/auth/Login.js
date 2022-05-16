@@ -63,7 +63,14 @@ const Login = (props) => {
             </div>
 
             <div className="form-btn-container">
-              <Button className="form-btn">LOGIN</Button>
+              <Button
+                className="form-btn"
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
+              >
+                LOGIN
+              </Button>
             </div>
           </form>
         </div>
