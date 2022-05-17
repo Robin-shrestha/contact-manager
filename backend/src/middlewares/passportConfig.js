@@ -1,13 +1,17 @@
-// const LocalStrategy = require('passport-local').Strategy
-// const bcrypt = require('bcrypt')
-
-import passportLocal from "passport-local";
 import bcrypt from "bcrypt";
 import Boom from "@hapi/boom";
+import passportLocal from "passport-local";
+import jwtPassportStrategy from "passport-jwt";
+import passport from "passport";
 
+import userServices from "../services/user.service.js";
+
+const ExtractJwt = jwtPassportStrategy.ExtractJwt;
+const JWTstrategy = jwtPassportStrategy.Strategy;
 const LocalStrategy = passportLocal.Strategy;
+const { getUserByEmail, getUserById } = userServices;
 
-function initialize(passport, getUserByEmail, getUserById) {
+function initialize() {
   const authenticateUser = async (email, password, done) => {
     const user = await getUserByEmail(email);
 
@@ -26,16 +30,72 @@ function initialize(passport, getUserByEmail, getUserById) {
     }
   };
 
-  passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser));
+  passport.use(
+    "local",
+    new LocalStrategy({ usernameField: "email" }, authenticateUser)
+  );
+
+  passport.use(
+    "jwt",
+    new JWTstrategy(
+      {
+        secretOrKey: process.env.JWT_SECRET,
+        jwtFromRequest: ExtractJwt.fromHeader("authorization"),
+        passReqToCallback: true,
+      },
+      async (req, token, done) => {
+        try {
+          const user = await getUserById(token.user);
+          req.user = user;
+          return done(null, token.user);
+        } catch (error) {
+          done(error);
+        }
+      }
+    )
+  );
+
   passport.serializeUser((user, done) => done(null, user.id));
+
   passport.deserializeUser(async (id, done) => {
-    let user = await getUserById(id);
     console.log(
-      "🚀 ~ file: passportConfig.js ~ line 33 ~ passport.deserializeUser ~ user",
-      user
+      "🚀 ~ file: passportConfig.js ~ line 56 ~ passport.deserializeUser ~ id",
+      id
     );
+    let user = await getUserById(id);
     return done(null, user);
   });
 }
 
-export default initialize;
+initialize();
+
+const authMiddlewares = {
+  passportJWT: async (req, res, next) => {
+    await passport.authenticate(
+      "jwt",
+      { session: true },
+      function (err, userId, info) {
+        if (info && info.name === "Error") {
+          let Err = Boom.badRequest(info.message);
+          return next(Err);
+        }
+        if (info && info.name === "TokenExpiredError") {
+          let Err = Boom.badRequest(info.message);
+          return next(Err);
+        }
+        if (info && info.name === "JsonWebTokenError") {
+          let Err = Boom.badRequest(info.message);
+          return next(Err);
+        }
+
+        if (err) {
+          return next(err);
+        }
+
+        req.userId = userId;
+        next();
+      }
+    )(req, res, next);
+  },
+};
+export default authMiddlewares;
