@@ -1,18 +1,20 @@
+import authServices from "../services/auth.service.js";
+
 const login = (req, res, next) => {
   try {
-    console.log(
-      "🚀 ~ file: auth.controller.js ~ line 2 ~ login ~ req",
-      req.body
-    );
-    res.send("login!");
+    res.status(200).json({
+      message: "User successfully logged in",
+      ...req.session.passport,
+    });
   } catch (error) {
     next(error);
   }
 };
 
-const register = (req, res, next) => {
+const register = async (req, res, next) => {
   try {
-    res.send("register");
+    const user = await authServices.addUser(req.body);
+    res.status(201).json({ message: "User successfully registered", ...user });
   } catch (error) {
     next(error);
   }

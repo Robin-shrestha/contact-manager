@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import database from "./config/knex.js";
 import directory from "./config/directory.js";
+import errorhandler from "./middlewares/errorhandlers.js";
 
 dotenv.config({
   path: `${directory.root}/.env`,
@@ -26,6 +27,8 @@ app.use(
 app.use(bodyParser.json());
 
 app.use("/v1", routes);
+
+app.use(errorhandler);
 
 app.listen(port, () => {
   console.log(`http://127.0.0.1:${port}`);
