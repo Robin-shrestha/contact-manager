@@ -11,7 +11,7 @@ const addUser = async (user) => {
   const data = await database("users").select().where("email", email);
 
   if (data.length) {
-    throw Boom.conflict("user already exist with that email.");
+    throw Boom.badData("user already exist with that email.");
   }
 
   let res = await database("users")

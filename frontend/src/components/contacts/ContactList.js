@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // import ReactTooltip from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +7,14 @@ import Input from "../common/Input";
 import Avatar from "../common/avatar";
 import Button from "../common/button";
 import SvgIcons from "../common/svgIcons/SvgIcons";
-import { DOT_MENU, PHONE, PLUS, SEARCh } from "../../constants/svgIcons";
+import { DOT_MENU, PLUS, SEARCh } from "../../constants/svgIcons";
 
 import "./style.css";
+import { AuthContext } from "../common/authProvider/AuthProvider";
+import { DEFAULT } from "../../constants/strings";
 
 const ListContacts = () => {
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   // TODO
   const [contacts, setContacts] = useState(mockData);
@@ -99,6 +102,14 @@ const ListContacts = () => {
           )}
         </div>
       </div>
+      <Button
+        customType={DEFAULT}
+        onClick={() => {
+          logout();
+        }}
+      >
+        Logout
+      </Button>
       {/* <ReactTooltip /> */}
     </div>
   );
