@@ -17,7 +17,6 @@ const app = express();
 const port = 8000;
 
 // TODO
-// authentication
 // File handeling(cloud storages)
 // services
 

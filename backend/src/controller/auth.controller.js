@@ -10,7 +10,7 @@ const login = (req, res, next) => {
         email: req.user.email,
         username: req.user.username,
       },
-      60 * 15,
+      60 * 60,
       process.env.JWT_SECRET
     );
 

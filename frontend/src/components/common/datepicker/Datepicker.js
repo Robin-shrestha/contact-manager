@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import DatePicker from "react-date-picker";
+import moment from "moment";
 
 import "./style.css";
 
@@ -22,7 +23,7 @@ const Datepicker = ({
 
   useEffect(() => {
     if (value) {
-      const [day, month, year] = value.split("/");
+      const [year, month, day] = value.split("-");
 
       setLocalDateState(new Date(year, month - 1, day));
     } else {
@@ -48,15 +49,12 @@ const Datepicker = ({
             {...rest}
             disabled={isDisabled}
             value={localDateState}
-            format="dd/MM/y"
+            format="y-MM-dd"
             onChange={(date) => {
               if (!date) {
                 onChange(date);
               } else {
-                const formattedDate = new Intl.DateTimeFormat("en-GB").format(
-                  date
-                );
-                onChange(formattedDate);
+                onChange(moment(date).format("YYYY-MM-DD"));
               }
             }}
             className={classNames("date-picker-field", className)}

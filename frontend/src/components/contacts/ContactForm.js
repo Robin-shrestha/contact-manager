@@ -11,6 +11,7 @@ import contactFormSchema from "../../schemas/contactForm";
 import Uploader from "../common/FileUpload/Uploader";
 import { genderOptions } from "../../constants/options";
 import { acceptImagesTypes } from "../../constants/uploadAcceptTypes";
+import axios from "axios";
 
 import "./style.css";
 import { ADD, CANCEL, DEFAULT, EDIT } from "../../constants/strings";
@@ -33,6 +34,7 @@ const initialValue = {
   gender: "",
   profile_pic: null,
 };
+
 const ContactForm = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -42,13 +44,37 @@ const ContactForm = () => {
 
   const formik = useFormik({
     initialValues: editMode ? initialValue : initialValue, //Todo
-    validationSchema: contactFormSchema,
+    // validationSchema: contactFormSchema,
     onSubmit: (values) => {
       console.log(
-        "🚀 ~ file: Register.js ~ line 16 ~ Register ~ values",
+        "🚀 ~ file: ContactForm.js ~ line 48 ~ ContactForm ~ values",
         values
       );
-      // navigate("/contacts");
+
+      const bodyFormData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        bodyFormData.append(key, value);
+      });
+
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/v1/contacts",
+        data: bodyFormData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTI4MDc1NjYsImV4cCI6MTY1MjgwODQ2NiwidXNlciI6IjM1ODY4Njc2LTFlNzgtNDQwMS1hMzVmLTNmMTZjYjk1ZGMzZCIsImVtYWlsIjoiYWxpbmEyQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYWxpbmEyIn0._rydd67N6G91uGIB2qV_lbZ72DKmcdhs9txOyVFhAzQ",
+        },
+      })
+        .then(function (response) {
+          //handle success
+          console.log(response.status);
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
     },
   });
 
