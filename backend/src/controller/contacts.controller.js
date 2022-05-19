@@ -60,6 +60,7 @@ const getContact = async (req, res, next) => {
       throw Boom.notFound("id not found!");
     }
 
+    // use promise.all
     if (data.profile_pic) {
       let urlRes = await getFileUrl(data.profile_pic);
 
