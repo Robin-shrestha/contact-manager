@@ -17,13 +17,6 @@ const config = {
     database: process.env.DB_NAME,
   },
 
-  //   migrations: {
-  //     tableName: 'migrations',
-  //     directory: process.cwd() + '/src/migrations',
-  //   },
-  //   seeds: {
-  //     directory: process.cwd() + '/src/seeds',
-  //   },
   debug: true,
 };
 
