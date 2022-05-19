@@ -20,10 +20,10 @@ const RadioButton = ({
   const [checkedValue, setCheckedValue] = useState(value);
 
   useEffect(() => {
-    if (checkedValue) {
-      onChange(checkedValue);
+    if (value) {
+      setCheckedValue(value);
     }
-  }, [checkedValue]);
+  }, [value]);
 
   return (
     <div
@@ -49,7 +49,7 @@ const RadioButton = ({
                     value={item.value}
                     checked={item.value === checkedValue}
                     onChange={(e) => {
-                      setCheckedValue(e.target.value);
+                      onChange(e.target.value);
                     }}
                   />
                   <span> {item.label}</span>

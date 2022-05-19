@@ -17,7 +17,7 @@ const config = {
     database: process.env.DB_NAME,
   },
 
-  debug: true,
+  debug: false,
 };
 
 const database = knex(config);

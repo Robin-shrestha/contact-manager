@@ -181,13 +181,18 @@
   font-weight: 600;
 }
 
-.header span {
+.header .edit-icon {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.header span:hover {
+.header .edit-icon:hover {
   transform: scale(1.1);
+}
+
+.back-btn {
+  border-color: white;
+  color: white;
 }
 
 /* End Contact Details */

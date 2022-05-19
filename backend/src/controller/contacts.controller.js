@@ -27,7 +27,7 @@ const getContacts = async (req, res, next) => {
         "date_of_birth"
       )
       .where("user_id", userId)
-      .whereLike("full_name", `%${query.search_key || ""}%`)
+      .whereILike("full_name", `%${query.search_key || ""}%`)
       .orderBy("is_favroite", "desc")
       .orderBy("full_name", "asc");
 
@@ -108,13 +108,13 @@ const createContact = async (req, res, next) => {
         email: body.email,
         full_name: body.full_name,
         gender: body.gender,
-        profile_pic: body.profile_pic,
-        mobile_number: body.home_no,
-        home_number: body.home_no,
-        work_number: body.work_no,
+        profile_pic: body.profile_pic || "image/jppg",
+        mobile_number: body.mobile_no,
+        home_number: body.home_no || null,
+        work_number: body.work_no || null,
         is_favroite: body.is_favorite,
-        address: body.address,
-        date_of_birth: body.date_of_birth,
+        address: body.address || null,
+        date_of_birth: body.date_of_birth || null,
         created_at: moment().format("YYYY-MM-DD"),
       })
       .returning(["id", "email", "full_name"]);
@@ -125,6 +125,10 @@ const createContact = async (req, res, next) => {
       ...addRes,
     });
   } catch (error) {
+    console.log(
+      "🚀 ~ file: contacts.controller.js ~ line 132 ~ createContact ~ error",
+      error.message
+    );
     const err = Boom.badData(error.message.split("-")?.[1] || "Bad Data");
     next(err);
   }
@@ -134,6 +138,10 @@ const updateContact = async (req, res, next) => {
   try {
     // TODO file
     const { file, body, userId, params } = req;
+    console.log(
+      "🚀 ~ file: contacts.controller.js ~ line 141 ~ updateContact ~ body",
+      body
+    );
 
     const [data] = await database("contacts")
       .where("user_id", userId)
@@ -143,12 +151,12 @@ const updateContact = async (req, res, next) => {
         full_name: body.full_name,
         gender: body.gender,
         profile_pic: body.profile_pic,
-        mobile_number: body.home_no,
-        home_number: body.home_no,
-        work_number: body.work_no,
+        mobile_number: body.mobile_no,
+        home_number: body.home_no || null,
+        work_number: body.work_no || null,
         is_favroite: body.is_favorite,
-        address: body.address,
-        date_of_birth: body.date_of_birth,
+        address: body.address || null,
+        date_of_birth: body.date_of_birth || null,
         updated_at: moment().format("YYYY-MM-DD"),
       })
       .returning(["id", "email", "full_name"]);
@@ -166,7 +174,9 @@ const updateContact = async (req, res, next) => {
     if (Boom.isBoom(error)) {
       return next(error);
     }
-    const err = Boom.badRequest(error.message.split("-")?.[1] || "Bad Request");
+    const err = Boom.badRequest(
+      error.message.split("-").slice(1).join("-") || "Bad Request"
+    );
 
     next(err);
   }

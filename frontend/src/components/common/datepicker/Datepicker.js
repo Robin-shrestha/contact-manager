@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import moment from "moment";
 import classNames from "classnames";
 import DatePicker from "react-date-picker";
-import moment from "moment";
+import React, { useEffect, useState } from "react";
+
+import { DATE_FORMAT } from "../../../constants/constants";
 
 import "./style.css";
 
@@ -54,7 +56,7 @@ const Datepicker = ({
               if (!date) {
                 onChange(date);
               } else {
-                onChange(moment(date).format("YYYY-MM-DD"));
+                onChange(moment(date).format(DATE_FORMAT));
               }
             }}
             className={classNames("date-picker-field", className)}

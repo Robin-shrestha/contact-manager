@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
+import moment from "moment";
 import Input from "../common/Input";
 import FormError from "../common/FormError";
 import Button from "../common/button/Button";
 import Datepicker from "../common/datepicker";
 import RadioButtons from "../common/radioButton";
-import contactFormSchema from "../../schemas/contactForm";
 import Uploader from "../common/FileUpload/Uploader";
+import { DATE_FORMAT } from "../../constants/constants";
 import { genderOptions } from "../../constants/options";
+import contactFormSchema from "../../schemas/contactForm";
+import { ADD, CANCEL, DEFAULT, EDIT } from "../../constants/strings";
 import { acceptImagesTypes } from "../../constants/uploadAcceptTypes";
-import axios from "axios";
+import {
+  addContact,
+  deletContact,
+  editContact,
+  getContact,
+} from "../../services/contacts";
 
 import "./style.css";
-import { ADD, CANCEL, DEFAULT, EDIT } from "../../constants/strings";
 
 const layout = {
   wrapperWidth: "100%",
@@ -33,10 +40,12 @@ const initialValue = {
   date_of_birth: undefined,
   gender: "",
   profile_pic: null,
+  is_favorite: false,
 };
 
 const ContactForm = () => {
   const params = useParams();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -44,43 +53,73 @@ const ContactForm = () => {
 
   const formik = useFormik({
     initialValues: editMode ? initialValue : initialValue, //Todo
-    // validationSchema: contactFormSchema,
+    validationSchema: contactFormSchema,
     onSubmit: (values) => {
       console.log(
-        "🚀 ~ file: ContactForm.js ~ line 48 ~ ContactForm ~ values",
+        "🚀 ~ file: ContactForm.js ~ line 59 ~ ContactForm ~ values",
         values
       );
-
       const bodyFormData = new FormData();
-
       Object.entries(values).forEach(([key, value]) => {
-        bodyFormData.append(key, value);
+        if (value !== undefined && value !== null) {
+          bodyFormData.append(key, value);
+        }
       });
 
-      axios({
-        method: "post",
-        url: "http://127.0.0.1:8000/v1/contacts",
-        data: bodyFormData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTI4MDc1NjYsImV4cCI6MTY1MjgwODQ2NiwidXNlciI6IjM1ODY4Njc2LTFlNzgtNDQwMS1hMzVmLTNmMTZjYjk1ZGMzZCIsImVtYWlsIjoiYWxpbmEyQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYWxpbmEyIn0._rydd67N6G91uGIB2qV_lbZ72DKmcdhs9txOyVFhAzQ",
-        },
-      })
-        .then(function (response) {
-          //handle success
-          console.log(response.status);
-        })
-        .catch(function (response) {
-          //handle error
-          console.log(response);
-        });
+      if (editMode) {
+        onEditContact(bodyFormData);
+      } else {
+        onAddContact(bodyFormData);
+      }
     },
   });
 
-  useEffect(() => {
-    location.pathname.endsWith("edit") ? setEditMode(true) : setEditMode(false);
+  const onAddContact = (values) => {
+    addContact(values).then((res) => {
+      res && navigate("/contacts");
+    });
+  };
 
+  const onEditContact = (values) => {
+    editContact(values, params?.id).then((res) => {
+      res && navigate(`/contacts/${params.id}/details`);
+    });
+  };
+  const onDeleteContact = () => {
+    deletContact(params?.id).then((res) => {
+      console.log(
+        "🚀 ~ file: ContactForm.js ~ line 87 ~ deletContact ~ res",
+        res
+      );
+      navigate("/contacts");
+    });
+  };
+
+  useEffect(() => {
+    if (location.pathname.endsWith("edit")) {
+      setEditMode(true);
+
+      getContact(params?.id)
+        .then((res) => {
+          formik.setValues({
+            full_name: res.full_name,
+            mobile_no: res.mobile_number,
+            home_no: res.home_number,
+            work_no: res.work_number,
+            address: res.address,
+            email: res.email,
+            date_of_birth: res.date_of_birth
+              ? moment(res.date_of_birth).format(DATE_FORMAT)
+              : null,
+            gender: res.gender,
+            profile_pic: res.profile_pic,
+            is_favorite: !!res.is_favroite,
+          });
+        })
+        .catch((err) => {});
+    } else {
+      setEditMode(false);
+    }
     return () => {};
   }, []);
 
@@ -106,6 +145,7 @@ const ContactForm = () => {
                   value={formik.values.full_name}
                   {...layout}
                   label={"full name"}
+                  required
                 />
                 <FormError
                   error={errors.full_name}
@@ -125,11 +165,37 @@ const ContactForm = () => {
                   {...layout}
                   label={"profile pic"}
                   accept={acceptImagesTypes}
+                  required
                 />
                 <FormError
                   error={errors.profile_pic}
                   touched={touched.profile_pic}
                 />
+              </div>
+            </div>
+            <div>
+              <div className="input-field-container my-4">
+                <label
+                  style={{
+                    color: "black",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  Favorite
+                  <input
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                    }}
+                    className="mx-4"
+                    type="checkbox"
+                    checked={formik.values.is_favorite}
+                    onClick={(e) => {
+                      formik.setFieldValue("is_favorite", e.target.checked);
+                    }}
+                  />
+                </label>
               </div>
             </div>
 
@@ -143,6 +209,8 @@ const ContactForm = () => {
                   value={formik.values.mobile_no}
                   {...layout}
                   label={"Mobile Number"}
+                  required
+                  type={"number"}
                 />
                 <FormError
                   error={errors.mobile_no}
@@ -158,6 +226,7 @@ const ContactForm = () => {
                   value={formik.values.home_no}
                   {...layout}
                   label={"Home Number"}
+                  type={"number"}
                 />
                 <FormError error={errors.home_no} touched={touched.home_no} />
               </div>
@@ -170,14 +239,27 @@ const ContactForm = () => {
                   value={formik.values.work_no}
                   {...layout}
                   label={"Work Number"}
+                  type={"number"}
                 />
                 <FormError error={errors.work_no} touched={touched.work_no} />
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4">
+              <div className="col-span-2 lg:col-span-1 pb-3 ">
+                <Input
+                  id="email"
+                  name={"email"}
+                  placeholder={"email"}
+                  onChange={(value) => formik.setFieldValue("email", value)}
+                  value={formik.values.email}
+                  {...layout}
+                  label={"email"}
+                  required
+                />
+                <FormError error={errors.email} touched={touched.email} />
+              </div>
               <div className="col-span-2 lg:col-span-2 pb-3">
                 <RadioButtons
-                  required
                   id="gender"
                   name={"gender"}
                   placeholder={"gender"}
@@ -189,10 +271,10 @@ const ContactForm = () => {
                 />
                 <FormError error={errors.gender} touched={touched.gender} />
               </div>
-
+            </div>
+            <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2 lg:col-span-1 pb-3 ">
                 <Datepicker
-                  required
                   id="date_of_birth"
                   name={"date_of_birth"}
                   placeholder={"date of birth"}
@@ -208,20 +290,7 @@ const ContactForm = () => {
                   touched={touched.date_of_birth}
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2 lg:col-span-1 pb-3 ">
-                <Input
-                  id="email"
-                  name={"email"}
-                  placeholder={"email"}
-                  onChange={(value) => formik.setFieldValue("email", value)}
-                  value={formik.values.email}
-                  {...layout}
-                  label={"email"}
-                />
-                <FormError error={errors.email} touched={touched.email} />
-              </div>
+
               <div className="col-span-2 lg:col-span-1">
                 <Input
                   id="address"
@@ -249,9 +318,7 @@ const ContactForm = () => {
                     EDIT
                   </Button>
                   <Button
-                    onClick={() => {
-                      console.log("delete");
-                    }}
+                    onClick={onDeleteContact}
                     customType={CANCEL}
                     className=""
                   >

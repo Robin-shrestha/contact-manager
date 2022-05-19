@@ -11,7 +11,8 @@ const contactFormSchema = Yup.object().shape({
   address: Yup.string()
     .min(2, stringConst.TOO_SHORT)
     .max(50, stringConst.TOO_LONG)
-    .required(stringConst.REQUIRED),
+    .nullable(true)
+    .optional(true),
   work_no: Yup.string()
     .min(6, stringConst.TOO_SHORT)
     .max(16, stringConst.TOO_LONG)
@@ -32,11 +33,9 @@ const contactFormSchema = Yup.object().shape({
   email: Yup.string()
     .email(stringConst.INVALID_FORMAT)
     .required(stringConst.REQUIRED),
-  date_of_birth: Yup.string().nullable(true).required(stringConst.REQUIRED),
+  date_of_birth: Yup.string().nullable(true).nullable(true).optional(true),
   profile_pic: Yup.object().nullable(true), //TODO thi should be string tat gives the location in the cloud drive
-  gender: Yup.string()
-    .oneOf(genderOptions.map((item) => item.value))
-    .required(stringConst.REQUIRED),
+  gender: Yup.string().oneOf(genderOptions.map((item) => item.value)),
 });
 
 export default contactFormSchema;

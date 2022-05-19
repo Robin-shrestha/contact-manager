@@ -15,13 +15,13 @@ const ControlMenu = ({
   return (
     <div className="control-menu">
       <div className="self-center	">
-        <Button className={"add-btn"}>
-          <span
-            className=" self-center px-2 cursor-pointer"
-            onClick={() => {
-              navigate("/contacts/add");
-            }}
-          >
+        <Button
+          className={"add-btn"}
+          onClick={() => {
+            navigate("/contacts/add");
+          }}
+        >
+          <span className=" self-center px-2 cursor-pointer">
             <SvgIcons name={PLUS} color="white" height={22} width={22} />
           </span>{" "}
         </Button>

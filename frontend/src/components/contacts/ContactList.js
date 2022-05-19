@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 import Avatar from "../common/avatar";
 import ControlMenu from "./ControlMenu";
 import SvgIcons from "../common/svgIcons/SvgIcons";
-import { DOT_MENU } from "../../constants/svgIcons";
+import { DOT_MENU, STAR } from "../../constants/svgIcons";
 import { getContacts } from "../../services/contacts";
 
 import "./style.css";
@@ -71,6 +71,16 @@ const ListContacts = () => {
                       </span>
                     </div>
                     <div className="flex justify-items-center items-center ">
+                      {item?.is_favroite && (
+                        <span>
+                          <SvgIcons
+                            name={STAR}
+                            color="yellow"
+                            height={30}
+                            width={30}
+                          />
+                        </span>
+                      )}
                       <span
                         className="contact-item-detail-icon"
                         data-tip="Details"
