@@ -104,7 +104,6 @@ const ContactForm = () => {
               ? moment(res.date_of_birth).format(DATE_FORMAT)
               : null,
             gender: res.gender,
-            profile_pic: res.profile_pic,
             is_favorite: !!res.is_favroite,
           });
         })

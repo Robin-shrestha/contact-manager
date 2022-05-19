@@ -1,4 +1,3 @@
-import _isEmpty from "lodash.isempty";
 import ReactLoading from "react-loading";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -83,9 +82,10 @@ const ContactDetails = () => {
             <>
               <div className="header">
                 <Avatar
-                  src={detailState?.image}
+                  src={detailState?.profile_pic}
                   name={detailState?.full_name}
                 />
+
                 <div className="flex justify-center items-center gap-4">
                   {detailState?.is_favroite && (
                     <span>

@@ -1,3 +1,4 @@
+import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
@@ -13,15 +14,24 @@ const ListContacts = () => {
   const navigate = useNavigate();
   // TODO
   const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    getContacts()
+  const _getContact = (search_key) => {
+    setLoading(true);
+    getContacts(search_key)
       .then((res) => {
         setContacts(res);
+        setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    _getContact();
   }, []);
 
   const _onChange = (value) => {
@@ -29,17 +39,26 @@ const ListContacts = () => {
   };
 
   const _onSearch = () => {
-    getContacts(searchValue)
-      .then((res) => {
-        setContacts(res);
-      })
-      .catch((err) => {});
+    _getContact(searchValue);
   };
 
   const _handleKeyPress = (event) => {
     if (event.key === "Enter") {
       _onSearch();
     }
+  };
+
+  const _loading = () => {
+    return (
+      <div
+        className="flex justify-center items-center"
+        style={{
+          padding: "30% 0px",
+        }}
+      >
+        <ReactLoading type={"spin"} color="#fff" className="self-center" />
+      </div>
+    );
   };
 
   return (
@@ -57,56 +76,59 @@ const ListContacts = () => {
           _onSearch={_onSearch}
           navigate={navigate}
         />
-
-        <div className="contact-list-container">
-          {Array.isArray(contacts) && contacts.length ? (
-            <div className="contact-list">
-              {contacts.map((item, index) => {
-                return (
-                  <div key={item.id} className="contact-item">
-                    <Avatar src={item.profile_pic} name={item.full_name} />
-                    <div className="flex justify-items-start items-end grow">
-                      <span className="pl-8 pr-2 capitalize text-lg">
-                        {item.full_name}
-                      </span>
-                    </div>
-                    <div className="flex justify-items-center items-center ">
-                      {item?.is_favroite && (
-                        <span>
+        {loading ? (
+          _loading()
+        ) : (
+          <div className="contact-list-container">
+            {Array.isArray(contacts) && contacts.length ? (
+              <div className="contact-list">
+                {contacts.map((item, index) => {
+                  return (
+                    <div key={item.id} className="contact-item">
+                      <Avatar src={item.profile_pic} name={item.full_name} />
+                      <div className="flex justify-items-start items-end grow">
+                        <span className="pl-8 pr-2 capitalize text-lg">
+                          {item.full_name}
+                        </span>
+                      </div>
+                      <div className="flex justify-items-center items-center ">
+                        {item?.is_favroite && (
+                          <span>
+                            <SvgIcons
+                              name={STAR}
+                              color="yellow"
+                              height={30}
+                              width={30}
+                            />
+                          </span>
+                        )}
+                        <span
+                          className="contact-item-detail-icon"
+                          data-tip="Details"
+                          onClick={() => {
+                            navigate(`/contacts/${item.id}/details`);
+                          }}
+                        >
                           <SvgIcons
-                            name={STAR}
-                            color="yellow"
-                            height={30}
-                            width={30}
+                            name={DOT_MENU}
+                            color="white"
+                            height={45}
+                            width={45}
                           />
                         </span>
-                      )}
-                      <span
-                        className="contact-item-detail-icon"
-                        data-tip="Details"
-                        onClick={() => {
-                          navigate(`/contacts/${item.id}/details`);
-                        }}
-                      >
-                        <SvgIcons
-                          name={DOT_MENU}
-                          color="white"
-                          height={45}
-                          width={45}
-                        />
-                      </span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              {" "}
-              THIS PLACE IS EMPTIER THAN A DESERT
-            </div>
-          )}
-        </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                {" "}
+                THIS PLACE IS EMPTIER THAN A DESERT
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* <ReactTooltip /> */}
