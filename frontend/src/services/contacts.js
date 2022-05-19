@@ -78,7 +78,6 @@ export const deletContact = async (id) => {
 
     toast.success(res?.data?.message || "contact deleted successfully");
     return res;
-    throw new Error("error");
   } catch (error) {
     toast.error(
       error?.response?.data?.message || error.response.statusText || "error"

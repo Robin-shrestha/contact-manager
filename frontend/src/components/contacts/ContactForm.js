@@ -55,10 +55,6 @@ const ContactForm = () => {
     initialValues: editMode ? initialValue : initialValue, //Todo
     validationSchema: contactFormSchema,
     onSubmit: (values) => {
-      console.log(
-        "🚀 ~ file: ContactForm.js ~ line 59 ~ ContactForm ~ values",
-        values
-      );
       const bodyFormData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -87,10 +83,6 @@ const ContactForm = () => {
   };
   const onDeleteContact = () => {
     deletContact(params?.id).then((res) => {
-      console.log(
-        "🚀 ~ file: ContactForm.js ~ line 87 ~ deletContact ~ res",
-        res
-      );
       navigate("/contacts");
     });
   };
