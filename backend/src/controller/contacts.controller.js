@@ -1,10 +1,10 @@
+import path from "path";
 import moment from "moment";
 import Boom from "@hapi/boom";
 
-// import dbx, { accessToken, appKey, appsecret } from "../config/dropbox.js";
-
-import axios from "axios";
 import database from "../config/knex.js";
+import directory from "../config/directory.js";
+import { uploadFile, getFileUrl } from "../services/google.service.js";
 
 const data = JSON.stringify({ limit: 1000 });
 
@@ -13,23 +13,20 @@ const getContacts = async (req, res, next) => {
     const { query, userId } = req;
 
     const contactRes = await database("contacts")
-      .select(
-        "id",
-        "is_favroite",
-        "full_name",
-        "email",
-        "gender",
-        "profile_pic",
-        "mobile_number",
-        "home_number",
-        "work_number",
-        "address",
-        "date_of_birth"
-      )
+      .select("id", "is_favroite", "full_name", "profile_pic", "mobile_number")
       .where("user_id", userId)
       .whereILike("full_name", `%${query.search_key || ""}%`)
       .orderBy("is_favroite", "desc")
       .orderBy("full_name", "asc");
+
+    for (let i = 0; i < contactRes.length; i++) {
+      try {
+        let urlRes = await getFileUrl(contactRes[i].profile_pic);
+        contactRes[i].profile_pic = urlRes.data.thumbnailLink;
+      } catch (error) {
+        contactRes[i].profile_pic = null;
+      }
+    }
 
     res.status(200).json({ success: true, data: contactRes });
   } catch (error) {
@@ -58,8 +55,15 @@ const getContact = async (req, res, next) => {
       )
       .where("user_id", userId)
       .where("id", params.id);
+
     if (!data) {
       throw Boom.notFound("id not found!");
+    }
+
+    if (data.profile_pic) {
+      let urlRes = await getFileUrl(data.profile_pic);
+
+      data.profile_pic = urlRes.data.thumbnailLink;
     }
 
     res.status(200).json({ success: true, data });
@@ -72,35 +76,11 @@ const getContact = async (req, res, next) => {
   }
 };
 
-const axiosRequest = (endpoint, data, extraheaders = {}) => {
-  const root = "https://api.dropboxapi.com/2";
-
-  axios
-    .post(`https://content.dropboxapi.com/2/files/upload`, data, {
-      headers: {
-        "Content-Type": "application/octet-stream",
-        Authorization: `Bearer ${accessToken}`,
-        "Dropbox-API-Arg": JSON.stringify({
-          autorename: true,
-          mode: "add",
-          mute: false,
-          path: "/",
-          strict_conflict: false,
-        }),
-      },
-      // auth: {
-      //   username: appKey,
-      //   password: appsecret,
-      // },
-    })
-    .then((res) => console.log("res", res.data))
-    .catch((err) => console.log("error", err.response.data));
-};
-
 const createContact = async (req, res, next) => {
   try {
-    // TODO file
     const { file, body, userId } = req;
+    const filePath = path.join(directory.root, file.path);
+    const googleRes = await uploadFile(filePath);
 
     const [addRes] = await database("contacts")
       .insert({
@@ -108,7 +88,7 @@ const createContact = async (req, res, next) => {
         email: body.email,
         full_name: body.full_name,
         gender: body.gender,
-        profile_pic: body.profile_pic || "image/jppg",
+        profile_pic: googleRes.data.id || "image.jpeg",
         mobile_number: body.mobile_no,
         home_number: body.home_no || null,
         work_number: body.work_no || null,
@@ -125,10 +105,6 @@ const createContact = async (req, res, next) => {
       ...addRes,
     });
   } catch (error) {
-    console.log(
-      "🚀 ~ file: contacts.controller.js ~ line 132 ~ createContact ~ error",
-      error.message
-    );
     const err = Boom.badData(error.message.split("-")?.[1] || "Bad Data");
     next(err);
   }
@@ -136,12 +112,13 @@ const createContact = async (req, res, next) => {
 
 const updateContact = async (req, res, next) => {
   try {
-    // TODO file
     const { file, body, userId, params } = req;
-    console.log(
-      "🚀 ~ file: contacts.controller.js ~ line 141 ~ updateContact ~ body",
-      body
-    );
+
+    let googleRes;
+    if (file) {
+      const filePath = path.join(directory.root, file.path);
+      googleRes = await uploadFile(filePath);
+    }
 
     const [data] = await database("contacts")
       .where("user_id", userId)
@@ -150,7 +127,7 @@ const updateContact = async (req, res, next) => {
         email: body.email,
         full_name: body.full_name,
         gender: body.gender,
-        profile_pic: body.profile_pic,
+        profile_pic: googleRes?.data?.id,
         mobile_number: body.mobile_no,
         home_number: body.home_no || null,
         work_number: body.work_no || null,

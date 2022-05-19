@@ -39,7 +39,6 @@ const logout = async (req, res, next) => {
   try {
     // TODO
     req.logout();
-    console.log(req.session);
     res.status(200).json({ message: "logged out successfully", ...user });
   } catch (error) {
     next(error);

@@ -58,10 +58,6 @@ function initialize() {
   passport.serializeUser((user, done) => done(null, user.id));
 
   passport.deserializeUser(async (id, done) => {
-    console.log(
-      "🚀 ~ file: passportConfig.js ~ line 56 ~ passport.deserializeUser ~ id",
-      id
-    );
     let user = await getUserById(id);
     return done(null, user);
   });
