@@ -34,10 +34,6 @@ const AuthProvider = (props) => {
     return axios
       .post(API_URL + "/auth/login", { email, password })
       .then((response) => {
-        console.log(
-          "🚀 ~ file: AuthProvider.js ~ line 31 ~ .then ~ response",
-          response
-        );
         setLocalStorage(JWT_TOKEN, response.data.jwt_token);
         setLocalStorage(USER_FULL_NAME, response.data.username);
         setLocalStorage(LOGGED_IN_USER, response.data.user);

@@ -21,7 +21,6 @@ const Login = (props) => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      console.log("🚀 ~ file: Login.js ~ line 16 ~ Login ~ values", values);
       login(values);
     },
   });

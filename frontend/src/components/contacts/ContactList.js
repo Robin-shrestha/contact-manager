@@ -1,33 +1,39 @@
-import React, { useState, useContext } from "react";
-// import ReactTooltip from "react-tooltip";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { mockData } from "./mock";
-import Input from "../common/Input";
 import Avatar from "../common/avatar";
-import Button from "../common/button";
+import ControlMenu from "./ControlMenu";
 import SvgIcons from "../common/svgIcons/SvgIcons";
-import { DOT_MENU, PLUS, SEARCh } from "../../constants/svgIcons";
+import { DOT_MENU } from "../../constants/svgIcons";
+import { getContacts } from "../../services/contacts";
 
 import "./style.css";
-import { AuthContext } from "../common/authProvider/AuthProvider";
-import { DEFAULT } from "../../constants/strings";
 
 const ListContacts = () => {
-  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   // TODO
-  const [contacts, setContacts] = useState(mockData);
+  const [contacts, setContacts] = useState([]);
 
   const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    getContacts()
+      .then((res) => {
+        setContacts(res);
+      })
+      .catch((err) => {});
+  }, []);
 
   const _onChange = (value) => {
     setSearchValue(value);
   };
 
   const _onSearch = () => {
-    // TODO search api
-    console.log("enter press here! ");
+    getContacts(searchValue)
+      .then((res) => {
+        setContacts(res);
+      })
+      .catch((err) => {});
   };
 
   const _handleKeyPress = (event) => {
@@ -58,26 +64,13 @@ const ListContacts = () => {
               {contacts.map((item, index) => {
                 return (
                   <div key={item.id} className="contact-item">
-                    <Avatar src={item.image} name={item.name} />
+                    <Avatar src={item.profile_pic} name={item.full_name} />
                     <div className="flex justify-items-start items-end grow">
                       <span className="pl-8 pr-2 capitalize text-lg">
-                        {item.name}
+                        {item.full_name}
                       </span>
-                      {/* <span className="pl-2 pr-4">
-                        {item.phone.mobile ||
-                          item.phone.home ||
-                          item.phone.work}
-                      </span> */}
                     </div>
                     <div className="flex justify-items-center items-center ">
-                      {/* <span className="px-2">
-                        <SvgIcons
-                          name={PHONE}
-                          color="white"
-                          height={45}
-                          width={45}
-                        />
-                      </span> */}
                       <span
                         className="contact-item-detail-icon"
                         data-tip="Details"
@@ -102,58 +95,8 @@ const ListContacts = () => {
           )}
         </div>
       </div>
-      <Button
-        customType={DEFAULT}
-        onClick={() => {
-          logout();
-        }}
-      >
-        Logout
-      </Button>
-      {/* <ReactTooltip /> */}
-    </div>
-  );
-};
 
-const ControlMenu = ({
-  searchValue,
-  _onChange,
-  _handleKeyPress,
-  _onSearch,
-  navigate,
-}) => {
-  return (
-    <div className="control-menu">
-      <div className="self-center	">
-        <Button className={"add-btn"}>
-          <span
-            className=" self-center px-2 cursor-pointer"
-            onClick={() => {
-              navigate("/contacts/add");
-            }}
-          >
-            <SvgIcons name={PLUS} color="white" height={22} width={22} />
-          </span>{" "}
-        </Button>
-      </div>
-      <div className="self-center	px-4">
-        <Input
-          value={searchValue}
-          onChange={_onChange}
-          wrapperClassName={"search-wrapper"}
-          className={"search"}
-          width={"300px"}
-          onKeyPress={_handleKeyPress}
-          suffix={
-            <span
-              onClick={_onSearch}
-              className="search-btn self-center px-2 cursor-pointer"
-            >
-              <SvgIcons name={SEARCh} />
-            </span>
-          }
-        />
-      </div>
+      {/* <ReactTooltip /> */}
     </div>
   );
 };
