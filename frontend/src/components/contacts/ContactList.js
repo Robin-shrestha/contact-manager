@@ -101,7 +101,10 @@ const ListContacts = () => {
               })}
             </div>
           ) : (
-            <div> THIS PLACE IS EMPTIER THAN A DESERT</div>
+            <div className="text-center py-8">
+              {" "}
+              THIS PLACE IS EMPTIER THAN A DESERT
+            </div>
           )}
         </div>
       </div>
